@@ -175,9 +175,9 @@ $(document).ready(function() {
 <body>
 <div id="container"><div id="page">
 <h3>Introducing jScrollie</h3>
-jScrollie is very easy to integrate into your site! Just add a "container" div around everything, and call jScrollie on this div:
+<p>jScrollie is very easy to integrate into your site! Just add a "container" div around everything, and call jScrollie on this div:</p>
 <pre>$('#container').jScrollie();</pre>
-Here's the required jQuery plugin:
+<p>Here's the required jQuery plugin:</p>
 <pre>/**
  * Code based (heavily) off of: http://code.google.com/p/scrollbarpaper/
  * @author Henri MEDOT
@@ -192,7 +192,10 @@ $.fn.extend({
       if (paper == null) {
         var barWidth = 14;
         $this.wrap('&lt;div class="jScrollieMetaContainer">');
-        $this.before('&lt;div class="jScrollieContainer" style="width:' + barWidth + 'px"&gt;&lt;div class="jScrollieTrack"&gt;&lt;div class="jScrollieDrag"&gt;&lt;div class="jScrollieDragTop"&gt;&lt;/div&gt;&lt;div class="jScrollieDragBottom"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div>');
+        $this.before('&lt;div class="jScrollieContainer" style="width:' + barWidth + 
+			'px"&gt;&lt;div class="jScrollieTrack"&gt;&lt;div class="jScrollieDrag"&gt;'+
+			'&lt;div class="jScrollieDragTop"&gt;&lt;/div&gt;&lt;div class="jScrollieDragBottom"&gt;'+
+			'&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div>');
         $this.append('&lt;div style="clear:both;"&gt;&lt;/div&gt;');
         $this.wrap('&lt;div class="jScrollie"&gt;');      
         var scrollie = $this.parent();
@@ -243,10 +246,8 @@ $.fn.extend({
 
         paper.show();
         content.addClass('jScrollieVisible');
-        //content.width($this.width() - content.innerWidth() + content.width() - barWidth);
         paper.height(scroller.height()-10);
         var offset = scroller.offset();
-       // paper.css('left', (offset.left + $this.innerWidth() - paper.width()) + 'px').css('top', offset.top);
         paper.css('right', '2px').css('top', '10px');
         var dragHeight = Math.max(Math.round(scroller.height() * ratio), dragTop.height() + dragBottom.height());
         drag.height(dragHeight-20);
@@ -283,7 +284,7 @@ $.fn.extend({
   }
 });
 </pre>
-And here's the CSS:
+<p>And here's the CSS:</p>
 <pre>
 div.jScrollieContainer
 {
