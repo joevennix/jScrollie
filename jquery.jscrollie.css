@@ -1,0 +1,44 @@
+div.jScrollieContainer
+{
+  position: absolute;
+  z-index: 1;
+  overflow:hidden;
+}
+
+div.jScrollieTrack
+{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  cursor: pointer;
+  width:14px;
+  background:transparent;
+}
+
+div.jScrollieDrag
+{
+  position: absolute;
+  width: 12px;
+  height: 100px;
+  background:rgba(0,0,0,.35);
+  -moz-border-radius:10px;
+	border-radius:10px;
+}
+
+div.jScrollieDragTop
+{
+  position: absolute;
+  top: 5px;
+  width: 100%;
+  
+}
+
+div.jScrollieDragBottom
+{
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+}
+div.jScrollieMetaContainer { position:absolute; top:0; bottom:0; left:0; right:0; overflow:hidden;}
+div.jScrollie {overflow-y:scroll; height:100%; width:110%; overflow-x:hidden; }
