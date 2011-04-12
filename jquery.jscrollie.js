@@ -20,7 +20,7 @@ $.fn.extend({
         var content = $('> :first', $this);
         //save our settings
         content.css('overflow', 'hidden');
-        $this.data('jScrollie',      jscrollie);
+        $this.data('jScrollie',      jScroll);
         $this.data('track',      $('.jScrollieTrack', jScroll));
         $this.data('drag',       $('.jScrollieDrag', jScroll));
         $this.data('dragTop',    $('.jScrollieDragTop', jScroll));
