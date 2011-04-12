@@ -1,35 +1,37 @@
 /**
  * Code based (heavily) off of: http://code.google.com/p/scrollbarpaper/
- * @author Henri MEDOT
- * @version last revision 2009-12-01
+ * @version last revision April 12 2011
  */
 
 $.fn.extend({
   jScrollie: function() {
     this.each(function(i) {
       var $this = $(this);
-      var paper = $this.data('paper');
-      if (paper == null) {
+      var jScroll = $this.data('jScrollie');
+      if (jScroll == null) {
+        //initialize the positioning divs
         var barWidth = 14;
         $this.wrap('<div class="jScrollieMetaContainer">');
         $this.before('<div class="jScrollieContainer" style="width:' + barWidth + 'px"><div class="jScrollieTrack"><div class="jScrollieDrag"><div class="jScrollieDragTop"></div><div class="jScrollieDragBottom"></div></div></div></div>');
-        $this.append('<div style="clear:both;"></div>');
+        $this.append('<div style="clear:both;"></div>'); //needed to figure out content height
         $this.wrap('<div class="jScrollie">');      
         var scrollie = $this.parent();
-        paper = scrollie.prev();
+        jScroll = scrollie.prev();
         var content = $('> :first', $this);
+        //save our settings
         content.css('overflow', 'hidden');
-        $this.data('paper',      paper);
-        $this.data('track',      $('.jScrollieTrack', paper));
-        $this.data('drag',       $('.jScrollieDrag', paper));
-        $this.data('dragTop',    $('.jScrollieDragTop', paper));
-        $this.data('dragBottom', $('.jScrollieDragBottom', paper));
+        $this.data('jScrollie',      jscrollie);
+        $this.data('track',      $('.jScrollieTrack', jScroll));
+        $this.data('drag',       $('.jScrollieDrag', jScroll));
+        $this.data('dragTop',    $('.jScrollieDragTop', jScroll));
+        $this.data('dragBottom', $('.jScrollieDragBottom', jScroll));
         $this.data('content',    content);
         $this.data('clearer',    $('> :last', $this));
         $this.data('scroller',   scrollie);
-        paper.hide();
+        jScroll.hide();
 
         var rs=function(e) {
+            //a resize function that should be called when content or window size changes.
             var offset = scroller.offset();
             var dataOffset = $this.data('offset');
             if (($this.height() != $this.data('height'))
@@ -41,6 +43,7 @@ $.fn.extend({
           }
         $(window).resize(rs);
         $('img').load(rs);
+        //other dynamic size cases here? original code had a setInterval loop that resized
       }
 
       var barWidth =   $this.data('barWidth');
@@ -59,18 +62,15 @@ $.fn.extend({
       $this.unbind();
 
       var ratio = scroller.height() / contentHeight;
-      if (ratio < 1) {
-
-        paper.show();
+      if (ratio < 1) { //content is big enough to show the scrollbar
+        jScroll.show();
         content.addClass('jScrollieVisible');
-        //content.width($this.width() - content.innerWidth() + content.width() - barWidth);
-        paper.height(scroller.height()-10);
+        jScroll.height(scroller.height()-10);
         var offset = scroller.offset();
-       // paper.css('left', (offset.left + $this.innerWidth() - paper.width()) + 'px').css('top', offset.top);
-        paper.css('right', '2px').css('top', '10px');
+        jScroll.css('right', '2px').css('top', '10px');
         var dragHeight = Math.max(Math.round(scroller.height() * ratio), dragTop.height() + dragBottom.height());
         drag.height(dragHeight-20);
-        var updateDragTop = function() {
+        var updateDragTop = function() { //called on scroll, and right now
           drag.css('top', Math.min(Math.round(scroller.scrollTop() * ratio), scroller.height() - dragHeight) + 'px');
         };
         updateDragTop();
@@ -93,12 +93,12 @@ $.fn.extend({
         });
       }
       else {
+        //content is small enough to hide the scroll bar
         $this.unbind();
-        paper.hide();
+        jScroll.hide();
         content.removeClass('jScrollieVisible');
         content.width($this.width() - content.innerWidth() + content.width());
       }
-      
       });
   }
 });
