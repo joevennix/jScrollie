@@ -13,7 +13,7 @@ $.fn.extend({
         var barWidth = 14;
         $this.wrap('<div class="jScrollieMetaContainer">');
         $this.before('<div class="jScrollieContainer" style="width:' + barWidth + 'px"><div class="jScrollieTrack"><div class="jScrollieDrag"><div class="jScrollieDragTop"></div><div class="jScrollieDragBottom"></div></div></div></div>');
-        $this.append('<div style="clear:both;"></div>'); //needed to figure out content height
+        $this.append('<div class="jScrollieClear" style="clear:both;"></div>'); //needed to figure out content height
         $this.wrap('<div class="jScrollie">');      
         var scrollie = $this.parent();
         jScroll = scrollie.prev();
@@ -41,8 +41,7 @@ $.fn.extend({
               $this.jScrollie();
             }
           }
-        $(window).resize(rs);
-        $('img').load(rs);
+        window.setInterval(function() { rs(); }, 400);
         //other dynamic size cases here? original code had a setInterval loop that resized
       }
 
