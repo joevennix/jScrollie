@@ -1,6 +1,6 @@
 /**
- * Code based (heavily) off of: http://code.google.com/p/scrollbarpaper/
- * @version last revision April 12 2011
+ * Code based off of: http://code.google.com/p/scrollbarpaper/
+ * @version last revision April 26 2011
  */
 
 $.fn.extend({
@@ -60,7 +60,9 @@ $.fn.extend({
 
       $this.unbind();
 
+      //When you click the track, the scrollbar "jumps" to your mouse
       var ratio = scroller.height() / contentHeight;
+
       if (ratio < 1) { //content is big enough to show the scrollbar
         jScroll.show();
         content.addClass('jScrollieVisible');
@@ -89,6 +91,10 @@ $.fn.extend({
             return false;
           }).mouseup(unbindMousemove);
           return false;
+        });
+        //When you click the track, the scrollbar "jumps" to your mouse
+        track.mousedown(function(event) {
+          scroller.scrollTop(((event.pageY-20) / scroller.height()) * contentHeight);
         });
       }
       else {
