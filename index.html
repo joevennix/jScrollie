@@ -1,80 +1,25 @@
 <!DOCTYPE html>
 
 <head>
-<style type="text/css">
-div.jScrollieContainer
-{
-  position: absolute;
-  z-index: 1;
-  overflow:hidden;
-}
-
-div.jScrollieTrack
-{
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  cursor: pointer;
-  width:14px;
-  background:transparent;
-}
-
-div.jScrollieDrag
-{
-  position: absolute;
-  width: 12px;
-  height: 100px;
-  background:rgba(0,0,0,.35);
-  -moz-border-radius:10px;
-	border-radius:10px;
-}
-
-div.jScrollieDragTop
-{
-  position: absolute;
-  top: 5px;
-  width: 100%;
-  
-}
-
-div.jScrollieDragBottom
-{
-  position: absolute;
-  bottom: 5px;
-  width: 100%;
-}
-div.jScrollieMetaContainer { position:absolute; top:0; bottom:0; left:0; right:0; overflow:hidden;}
-div.jScrollie {overflow-y:scroll; height:100%; width:110%; overflow-x:hidden; }
-
-::selection {
-	background: #4bae6d; 
-}
-::-moz-selection {
-        background: #4bae6d; /* Firefox */
-}
-
-#page { width:900px; margin:0 auto; padding:0; padding-right:10%; min-height:100%; margin-bottom:35px;}
-pre { display:block; -moz-box-shadow: inset 0 0 5px #aaa;
--webkit-box-shadow: inset 0 0 5px #aaa;
-box-shadow: inner 0 0 5px #aaa; font-family:Monaco, monospace; font-size:11px; margin:35px 0; background:#eee; padding:10px; }
-h3 { font-weight:600; font-size:32px; margin-bottom:5px; font-family:Cabin, Helvetica, sans-serif;}
-p { font-family:'Times New Roman', Times, serif; text-indent:30px; font-size:18px; line-height:28px; }
-</style>
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-$.fn.extend({jScrollie:function(){this.each(function(i){var $this=$(this);var jScroll=$this.data('jScrollie');if(jScroll==null){var barWidth=14;$this.wrap('<div class="jScrollieMetaContainer">');$this.before('<div class="jScrollieContainer" style="width:'+barWidth+'px"><div class="jScrollieTrack"><div class="jScrollieDrag"><div class="jScrollieDragTop"></div><div class="jScrollieDragBottom"></div></div></div></div>');$this.append('<div style="clear:both;"></div>');$this.wrap('<div class="jScrollie">');var scrollie=$this.parent();jScroll=scrollie.prev();var content=$('> :first',$this);content.css('overflow','hidden');$this.data('jScrollie',jScroll);$this.data('track',$('.jScrollieTrack',jScroll));$this.data('drag',$('.jScrollieDrag',jScroll));$this.data('dragTop',$('.jScrollieDragTop',jScroll));$this.data('dragBottom',$('.jScrollieDragBottom',jScroll));$this.data('content',content);$this.data('clearer',$('> :last',$this));$this.data('scroller',scrollie);jScroll.hide();var rs=function(e){var offset=scroller.offset();var dataOffset=$this.data('offset');if(($this.height()!=$this.data('height'))||(clearer.position().top-content.position().top!=$this.data('contentHeight'))||(offset.top!=dataOffset.top)||(offset.left!=dataOffset.left)){$this.jScrollie();}}
-$(window).resize(rs);$('img').load(rs);}
-var barWidth=$this.data('barWidth');var track=$this.data('track');var drag=$this.data('drag');var dragTop=$this.data('dragTop');var dragBottom=$this.data('dragBottom');var content=$this.data('content');var clearer=$this.data('clearer');var scroller=$this.data('scroller');var contentHeight=clearer.position().top-content.position().top;$this.data('height',scroller.height());$this.data('contentHeight',contentHeight);$this.data('offset',scroller.offset());$this.unbind();var ratio=scroller.height()/contentHeight;if(ratio<1){jScroll.show();content.addClass('jScrollieVisible');jScroll.height(scroller.height()-10);var offset=scroller.offset();jScroll.css('right','2px').css('top','10px');var dragHeight=Math.max(Math.round(scroller.height()*ratio),dragTop.height()+dragBottom.height());drag.height(dragHeight-20);var updateDragTop=function(){drag.css('top',Math.min(Math.round(scroller.scrollTop()*ratio),scroller.height()-dragHeight)+'px');};updateDragTop();scroller.scroll(function(event){updateDragTop();});var unbindMousemove=function(){$('html').unbind('mousemove.jScrollie');};drag.mousedown(function(event){unbindMousemove();var offsetTop=event.pageY-drag.offset().top;$('html').bind('mousemove.jScrollie',function(event){scroller.scrollTop((event.pageY-scroller.offset().top-offsetTop)/ratio);return false;}).mouseup(unbindMousemove);return false;});}
-else{$this.unbind();jScroll.hide();content.removeClass('jScrollieVisible');content.width($this.width()-content.innerWidth()+content.width());}});}});
-$(document).ready(function() {
-  if (((navigator.userAgent.indexOf("WebKit")!=-1)||(navigator.userAgent.indexOf("Mozilla")!=-1) || (navigator.userAgent.indexOf("Chrome")!=-1)) && navigator.userAgent.indexOf("iPhone")!==1)
-    $('#container').jScrollie();
-  $('img').wrap('<div class="divImg">');
-});
-</script>
+  <link href="jquery.jscrollie.css" rel="stylesheet" type="text/css" />
+  <style type="text/css">
+    html, body { margin:0; padding:0;}
+    #page { width:900px; margin:0 auto; padding:0; padding-right:10%; min-height:100%; margin-bottom:35px;}
+    pre { display:block; -moz-box-shadow: inset 0 0 5px #aaa; -webkit-box-shadow: inset 0 0 5px #aaa; box-shadow: inner 0 0 5px #aaa; font-family:Monaco, monospace; font-size:11px; margin:35px 0; background:#eee; padding:10px; }
+    h3 { font-weight:600; font-size:32px; margin-bottom:5px; font-family:Cabin, Helvetica, sans-serif;}
+    p { font-family:'Times New Roman', Times, serif; text-indent:30px; font-size:18px; line-height:28px; }
+  </style>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="jquery.jscrollie.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#container').jScrollie();
+      $('img').wrap('<div class="divImg">');
+    });
+  </script>
 </head>
+
+
 <body>
 <div id="container"><div id="page">
 <h3>Introducing jScrollie</h3>
@@ -82,8 +27,8 @@ $(document).ready(function() {
 <pre>$('#container').jScrollie();</pre>
 <p>Here's the required jQuery plugin:</p>
 <pre>/**
- * Code based (heavily) off of: http://code.google.com/p/scrollbarpaper/
- * @version last revision April 12 2011
+ * Code based off of: http://code.google.com/p/scrollbarpaper/
+ * @version last revision April 26 2011
  */
 
 $.fn.extend({
@@ -95,16 +40,15 @@ $.fn.extend({
         //initialize the positioning divs
         var barWidth = 14;
         $this.wrap('&lt;div class="jScrollieMetaContainer"&gt;');
-        $this.before('&lt;div class="jScrollieContainer" style="width:' + 
-            barWidth + 'px"&gt;&lt;div class="jScrollieTrack"&gt;&lt;div\
-            class="jScrollieDrag"&gt;&lt;div class="jScrollieDragTop"&gt;\
-            &lt;/div&gt;&lt;div class="jScrollieDragBottom"&gt;&lt;/div&gt;\
-            &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;');
-        $this.append('&lt;div style="clear:both;"&gt;&lt;/div&gt;'); //needed to figure out content height
+        $this.before('&lt;div class="jScrollieContainer" style="width:' + barWidth + 'px"&gt; \ 
+          &lt;div class="jScrollieTrack"&gt;&lt;div class="jScrollieDrag"&gt; \
+          &lt;div class="jScrollieDragTop"&gt;&lt;/div&gt;&lt;div class="jScrollieDragBottom"&gt; \
+          &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;');
+        $this.append('&lt;div class="jScrollieClear" style="clear:both;"&gt;&lt;/div&gt;'); //needed to figure out content height
         $this.wrap('&lt;div class="jScrollie"&gt;');      
         var scrollie = $this.parent();
         jScroll = scrollie.prev();
-        var content = $('> :first', $this);
+        var content = $('&gt; :first', $this);
         //save our settings
         content.css('overflow', 'hidden');
         $this.data('jScrollie',      jScroll);
@@ -113,7 +57,7 @@ $.fn.extend({
         $this.data('dragTop',    $('.jScrollieDragTop', jScroll));
         $this.data('dragBottom', $('.jScrollieDragBottom', jScroll));
         $this.data('content',    content);
-        $this.data('clearer',    $('> :last', $this));
+        $this.data('clearer',    $('&gt; :last', $this));
         $this.data('scroller',   scrollie);
         jScroll.hide();
 
@@ -128,8 +72,7 @@ $.fn.extend({
               $this.jScrollie();
             }
           }
-        $(window).resize(rs);
-        $('img').load(rs);
+        window.setInterval(function() { rs(); }, 400);
         //other dynamic size cases here? original code had a setInterval loop that resized
       }
 
@@ -148,8 +91,10 @@ $.fn.extend({
 
       $this.unbind();
 
+      //When you click the track, the scrollbar "jumps" to your mouse
       var ratio = scroller.height() / contentHeight;
-      if (ratio < 1) { //content is big enough to show the scrollbar
+
+      if (ratio &lt; 1) { //content is big enough to show the scrollbar
         jScroll.show();
         content.addClass('jScrollieVisible');
         jScroll.height(scroller.height()-10);
@@ -177,6 +122,10 @@ $.fn.extend({
             return false;
           }).mouseup(unbindMousemove);
           return false;
+        });
+        //When you click the track, the scrollbar "jumps" to your mouse
+        track.mousedown(function(event) {
+          scroller.scrollTop(((event.pageY-20) / scroller.height()) * contentHeight);
         });
       }
       else {
