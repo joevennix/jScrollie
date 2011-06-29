@@ -1,238 +1,35 @@
 <!DOCTYPE html>
 
 <head>
+  <link href="jquery.jscrollie.css" rel="stylesheet" type="text/css" />
   <style type="text/css">
-    div.jScrollieContainer
-    {
-      position: absolute;
-      z-index: 1;
-      overflow:hidden;
-    }
-
-    div.jScrollieTrack
-    {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      cursor: pointer;
-      width:14px;
-      background:transparent;
-    }
-
-    div.jScrollieDrag
-    {
-      position: absolute;
-      width: 12px;
-      height: 100px;
-      background:rgba(0,0,0,.35);
-      -moz-border-radius:10px;
-      border-radius:10px;
-    }
-
-    div.jScrollieDragTop
-    {
-      position: absolute;
-      top: 5px;
-      width: 100%;
-      
-    }
-
-    div.jScrollieDragBottom
-    {
-      position: absolute;
-      bottom: 5px;
-      width: 100%;
-    }
-    div.jScrollieMetaContainer { position:absolute; top:0; bottom:0; left:0; right:0; overflow:hidden;}
-    div.jScrollie {overflow-y:scroll; height:100%; width:110%; overflow-x:hidden; }
-
     html, body { margin:0; padding:0;}
-    #page { width:900px; margin:0 auto; padding:0; padding-right:10%; min-height:100%; margin-bottom:35px;}
+    #page { width:800px; height:4000px; margin:0 auto; padding:0; padding-right:10%; min-height:100%; margin-bottom:35px;}
     pre { display:block; -moz-box-shadow: inset 0 0 5px #aaa; -webkit-box-shadow: inset 0 0 5px #aaa; box-shadow: inner 0 0 5px #aaa; font-family:Monaco, monospace; font-size:11px; margin:35px 0; background:#eee; padding:10px; }
     h3 { font-weight:600; font-size:32px; margin-bottom:5px; font-family:Cabin, Helvetica, sans-serif;}
     p { font-family:'Times New Roman', Times, serif; text-indent:30px; font-size:18px; line-height:28px; }
   </style>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="jquery.jscrollie.js"></script>
   <script type="text/javascript">
-    // minified with YUI compressor
-    $.fn.extend({jScrollie:function(){this.each(function(r){var e=$(this);var o=e.data("jScrollie");if(o==null){var m=14;e.wrap('<div class="jScrollieMetaContainer">');e.before('<div class="jScrollieContainer" style="width:'+m+'px"><div class="jScrollieTrack"><div class="jScrollieDrag"><div class="jScrollieDragTop"></div><div class="jScrollieDragBottom"></div></div></div></div>');e.append('<div class="jScrollieClear" style="clear:both;"></div>');e.wrap('<div class="jScrollie">');var j=e.parent();o=j.prev();var p=$("> :first",e);p.css("overflow","hidden");e.data("jScrollie",o);e.data("track",$(".jScrollieTrack",o));e.data("drag",$(".jScrollieDrag",o));e.data("dragTop",$(".jScrollieDragTop",o));e.data("dragBottom",$(".jScrollieDragBottom",o));e.data("content",p);e.data("clearer",$("> :last",e));e.data("scroller",j);o.hide();var h=function(u){var v=t.offset();var i=e.data("offset");if((e.height()!=e.data("height"))||(b.position().top-p.position().top!=e.data("contentHeight"))||(v.top!=i.top)||(v.left!=i.left)){e.jScrollie()}};window.setInterval(function(){h()},400)}var m=e.data("barWidth");var n=e.data("track");var s=e.data("drag");var a=e.data("dragTop");var f=e.data("dragBottom");var p=e.data("content");var b=e.data("clearer");var t=e.data("scroller");var q=b.position().top-p.position().top;e.data("height",t.height());e.data("contentHeight",q);e.data("offset",t.offset());e.unbind();var g=t.height()/q;if(g<1){o.show();p.addClass("jScrollieVisible");o.height(t.height()-10);var c=t.offset();o.css("right","2px").css("top","10px");var l=Math.max(Math.round(t.height()*g),a.height()+f.height());s.height(l-20);var d=function(){s.css("top",Math.min(Math.round(t.scrollTop()*g),t.height()-l)+"px")};d();t.scroll(function(i){d()});var k=function(){$("html").unbind("mousemove.jScrollie")};s.mousedown(function(u){k();var i=u.pageY-s.offset().top;$("html").bind("mousemove.jScrollie",function(v){t.scrollTop((v.pageY-t.offset().top-i)/g);return false}).mouseup(k);return false});n.mousedown(function(i){t.scrollTop(((i.pageY-20)/t.height())*q)})}else{e.unbind();o.hide();p.removeClass("jScrollieVisible");p.width(e.width()-p.innerWidth()+p.width())}})}});
-
     $(document).ready(function() {
-      $('#container').jScrollie();
-      $('img').wrap('<div class="divImg">');
+      $.jScrollie();
     });
   </script>
 </head>
 
-
 <body>
-<div id="container"><div id="page">
-<h3>Introducing jScrollie</h3>
-<p>jScrollie is very easy to integrate into your site! Just add a "container" div around everything, and call jScrollie on this div:</p>
-<pre>$('#container').jScrollie();</pre>
-<p>Here's the required jQuery plugin:</p>
-<pre>/**
- * Code based off of: http://code.google.com/p/scrollbarpaper/
- * @version last revision April 26 2011
- */
-
-$.fn.extend({
-  jScrollie: function() {
-    this.each(function(i) {
-      var $this = $(this);
-      var jScroll = $this.data('jScrollie');
-      if (jScroll == null) {
-        //initialize the positioning divs
-        var barWidth = 14;
-        $this.wrap('&lt;div class="jScrollieMetaContainer"&gt;');
-        $this.before('&lt;div class="jScrollieContainer" style="width:' + barWidth + 'px"&gt; \ 
-          &lt;div class="jScrollieTrack"&gt;&lt;div class="jScrollieDrag"&gt; \
-          &lt;div class="jScrollieDragTop"&gt;&lt;/div&gt;&lt;div class="jScrollieDragBottom"&gt; \
-          &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;');
-        $this.append('&lt;div class="jScrollieClear" style="clear:both;"&gt;&lt;/div&gt;'); //needed to figure out content height
-        $this.wrap('&lt;div class="jScrollie"&gt;');      
-        var scrollie = $this.parent();
-        jScroll = scrollie.prev();
-        var content = $('&gt; :first', $this);
-        //save our settings
-        content.css('overflow', 'hidden');
-        $this.data('jScrollie',      jScroll);
-        $this.data('track',      $('.jScrollieTrack', jScroll));
-        $this.data('drag',       $('.jScrollieDrag', jScroll));
-        $this.data('dragTop',    $('.jScrollieDragTop', jScroll));
-        $this.data('dragBottom', $('.jScrollieDragBottom', jScroll));
-        $this.data('content',    content);
-        $this.data('clearer',    $('&gt; :last', $this));
-        $this.data('scroller',   scrollie);
-        jScroll.hide();
-
-        var rs=function(e) {
-            //a resize function that should be called when content or window size changes.
-            var offset = scroller.offset();
-            var dataOffset = $this.data('offset');
-            if (($this.height() != $this.data('height'))
-             || (clearer.position().top - content.position().top != $this.data('contentHeight'))
-             || (offset.top != dataOffset.top)
-             || (offset.left != dataOffset.left)) {
-              $this.jScrollie();
-            }
-          }
-        window.setInterval(function() { rs(); }, 400);
-        //other dynamic size cases here? original code had a setInterval loop that resized
-      }
-
-      var barWidth =   $this.data('barWidth');
-      var track =      $this.data('track');
-      var drag =       $this.data('drag');
-      var dragTop =    $this.data('dragTop');
-      var dragBottom = $this.data('dragBottom');
-      var content =    $this.data('content');
-      var clearer =    $this.data('clearer');
-      var scroller = $this.data('scroller');
-      var contentHeight = clearer.position().top - content.position().top;
-      $this.data('height', scroller.height());
-      $this.data('contentHeight', contentHeight);
-      $this.data('offset', scroller.offset());
-
-      $this.unbind();
-
-      //When you click the track, the scrollbar "jumps" to your mouse
-      var ratio = scroller.height() / contentHeight;
-
-      if (ratio &lt; 1) { //content is big enough to show the scrollbar
-        jScroll.show();
-        content.addClass('jScrollieVisible');
-        jScroll.height(scroller.height()-10);
-        var offset = scroller.offset();
-        jScroll.css('right', '2px').css('top', '10px');
-        var dragHeight = Math.max(Math.round(scroller.height() * ratio), dragTop.height() + dragBottom.height());
-        drag.height(dragHeight-20);
-        var updateDragTop = function() { //called on scroll, and right now
-          drag.css('top', Math.min(Math.round(scroller.scrollTop() * ratio), scroller.height() - dragHeight) + 'px');
-        };
-        updateDragTop();
-
-        scroller.scroll(function(event) {
-          updateDragTop();
+  <div id="page">
+    <h3>Introducing jScrollie</h3>
+    <p>jScrollie is very easy to integrate into your site! Here's all you need:</p>
+    <pre>
+      &lt;link href="jquery.jscrollie.css" rel="stylesheet" type="text/css" /&gt;
+      &lt;script type="text/javascript" src="jquery.jscrollie.js"&gt;&lt;/script&gt;
+      &lt;script type="text/javascript"&gt;
+        $(document).ready(function() {
+          $.jScrollie();
         });
-
-        var unbindMousemove = function() {
-          $('html').unbind('mousemove.jScrollie');
-        };
-        drag.mousedown(function(event) {
-          unbindMousemove();
-          var offsetTop = event.pageY - drag.offset().top;
-          $('html').bind('mousemove.jScrollie', function(event) {
-            scroller.scrollTop((event.pageY - scroller.offset().top - offsetTop) / ratio);
-            return false;
-          }).mouseup(unbindMousemove);
-          return false;
-        });
-        //When you click the track, the scrollbar "jumps" to your mouse
-        track.mousedown(function(event) {
-          scroller.scrollTop(((event.pageY-20) / scroller.height()) * contentHeight);
-        });
-      }
-      else {
-        //content is small enough to hide the scroll bar
-        $this.unbind();
-        jScroll.hide();
-        content.removeClass('jScrollieVisible');
-        content.width($this.width() - content.innerWidth() + content.width());
-      }
-      });
-  }
-});
-</pre>
-<p>And here's the CSS:</p>
-<pre>
-div.jScrollieContainer
-{
-  position: absolute;
-  z-index: 1;
-  overflow:hidden;
-}
-
-div.jScrollieTrack
-{
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  cursor: pointer;
-  width:14px;
-  background:transparent;
-}
-
-div.jScrollieDrag
-{
-  position: absolute;
-  width: 12px;
-  height: 100px;
-  background:rgba(0,0,0,.35);
-  -moz-border-radius:10px;
-	border-radius:10px;
-}
-
-div.jScrollieDragTop
-{
-  position: absolute;
-  top: 5px;
-  width: 100%;
-  
-}
-
-div.jScrollieDragBottom
-{
-  position: absolute;
-  bottom: 5px;
-  width: 100%;
-}
-div.jScrollieMetaContainer { position:absolute; top:0; bottom:0; left:0; right:0; overflow:hidden;}
-div.jScrollie {overflow-y:scroll; height:100%; width:110%; overflow-x:hidden; }
-</pre>
-</div>
-</div>
+      &lt;/script&gt;</pre>
+  </div>
 </body>
 </html>
